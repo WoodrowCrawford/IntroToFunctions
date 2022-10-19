@@ -39,7 +39,8 @@ namespace HelloWorld
                 }
 
             }
-            //If the player likes the name given then end the game
+      
+           
         }
 
         void Explore()
@@ -87,8 +88,8 @@ namespace HelloWorld
                             "mansion. It looks abandoned so you decide to go inside.");
                         break;
                     }
+                
                 case 1:
-                case 2:
                     {
                         exitMessage = "You leave the kitchen";
                         Console.WriteLine("When you go inside, you notice the rooms are scrambled." +
@@ -144,14 +145,27 @@ namespace HelloWorld
             //Create battle loop. Loops until the player or enemy is dead
             while (character1Health > 0 && character2Health > 0)
             {
+               //Used to make the enemy deal random damage
+                Random random = new Random();
+
+                //Stores the random damage variable
+                int enemyDamgeDealt;
+          
+
                 Console.WriteLine("Character 1 health: " + character1Health);
-                Console.WriteLine("Enemy");
+                Console.WriteLine("Enemy: " + character2Health);
                 input = GetInput("Attack", "Defend", "What will you do?");
                 //This means the player attacks
                 if (input == '1')
                 {
                     character2Health -= 10;
                     Console.WriteLine("You dealt 10 damage");
+
+                    if(character2Health <= 0)
+                    {
+                        break;
+                        
+                    }
 
 
                 }
@@ -162,8 +176,13 @@ namespace HelloWorld
                     Console.ReadKey();
                     continue;
                 }
-                character1Health -= 20;
-                Console.WriteLine("The enemy hit you and dealt 20 damage");
+
+                enemyDamgeDealt = random.Next(1, 22);
+
+                character1Health -= enemyDamgeDealt;
+                 
+
+                Console.WriteLine("The enemy hit you and dealt " + enemyDamgeDealt + " damage!");
                 Console.ReadKey();
             }
             return character1Health <= 0;
@@ -292,7 +311,8 @@ namespace HelloWorld
         public void Update()
         {
             Requestname(ref _playerName);
-            EnterRoom(0);
+            Explore();
+           
         }
 
 
